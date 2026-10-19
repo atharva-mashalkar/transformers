@@ -139,6 +139,17 @@ class PocketTTSAudioTokenizerModelTest(ModelTesterMixin, unittest.TestCase):
         config_and_inputs = self.model_tester.prepare_config_and_inputs()
         self.model_tester.create_and_check_model_forward(*config_and_inputs)
 
+    @unittest.skip(
+        reason="The model is its encoder and decoder, about half of it each, kept whole by `_no_split_modules`: a first "
+        "device too small for the model cannot hold one half plus the room accelerate keeps for the largest one."
+    )
+    def test_model_parallelism(self):
+        pass
+
+    @unittest.skip(reason="Same as `test_model_parallelism`: the encoder and decoder halves cannot be split.")
+    def test_cpu_offload(self):
+        pass
+
     @unittest.skip(reason="The audio tokenizer has no token embeddings.")
     def test_model_get_set_embeddings(self):
         pass
