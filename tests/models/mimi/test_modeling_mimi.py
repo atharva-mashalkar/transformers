@@ -167,6 +167,9 @@ class MimiModelTester:
 @require_torch
 class MimiModelTest(ModelTesterMixin, unittest.TestCase):
     all_model_classes = (MimiModel,) if is_torch_available() else ()
+    # the encoder and the decoder (40% of the model each) are not split: the first device holds one of them, plus the
+    # room accelerate keeps for the largest one
+    model_split_percents = [0.5, 0.85, 0.95]
     is_encoder_decoder = True
 
     test_resize_embeddings = False
